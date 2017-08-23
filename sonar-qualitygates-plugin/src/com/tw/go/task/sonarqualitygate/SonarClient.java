@@ -20,8 +20,7 @@ public class SonarClient extends ApiRequestBase {
 
     public JSONObject getProjectWithQualityGateDetails(String projectKey) throws Exception
     {
-        String uri = getApiUrl() + "/resources?resource=%1$s&metrics=quality_gate_details";
-        uri = String.format(uri, projectKey);
+        String uri = getApiUrl() + "/qualitygates/project_status?projectKey=" + projectKey;
         String resultData = requestGet(uri);
 
         JSONArray jsonArray = new JSONArray(resultData);
