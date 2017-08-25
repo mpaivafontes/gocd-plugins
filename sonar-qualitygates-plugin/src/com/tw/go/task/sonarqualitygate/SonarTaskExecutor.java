@@ -4,6 +4,8 @@ package com.tw.go.task.sonarqualitygate;
 
 import com.thoughtworks.go.plugin.api.task.JobConsoleLogger;
 import com.tw.go.plugin.common.*;
+import com.tw.go.task.sonarqualitygate.model.Sonar;
+import com.tw.go.task.sonarqualitygate.model.SonarStatus;
 import org.json.JSONObject;
 
 import java.security.GeneralSecurityException;
@@ -158,7 +160,7 @@ public class SonarTaskExecutor extends TaskExecutor {
             log("Finish to check quality. response[ " + response + "]");
 
             if (response != null) {
-                final Sonar.SonarStatus projectStatus = response.getProjectStatus();
+                final SonarStatus projectStatus = response.getProjectStatus();
 
                 return this.parseResult(projectStatus.getStatus().getValue(), issueTypeFail);
             }
@@ -174,12 +176,12 @@ public class SonarTaskExecutor extends TaskExecutor {
 
         switch (issueTypeFail) {
             case "error":
-                if ("ERROR".equals(qgResult)) {
+                if ("ERROR".equalsIgnoreCase(qgResult)) {
                     return new Result(false, "At least one Error in Quality Gate");
                 }
                 break;
             case "warning":
-                if ("ERROR".equals(qgResult) || "WARN".equals(qgResult)) {
+                if ("ERROR".equalsIgnoreCase(qgResult) || "WARN".equalsIgnoreCase(qgResult)) {
                     return new Result(false, "At least one Error or Warning in Quality Gate");
                 }
                 break;

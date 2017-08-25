@@ -1,8 +1,12 @@
 package com.tw.go.task.sonarqualitygate;
 
+import com.tw.go.task.sonarqualitygate.model.ProjectStatus;
+import com.tw.go.task.sonarqualitygate.model.Sonar;
+import com.tw.go.task.sonarqualitygate.model.SonarStatus;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.InputStream;
@@ -11,6 +15,7 @@ import java.util.Properties;
 /**
  * Created by MarkusW on 26.10.2015.
  */
+@Ignore
 public class SonarClientTest {
 
     // properites required for executing the tests
@@ -19,7 +24,7 @@ public class SonarClientTest {
 
 
     @BeforeClass
-    public static void init() throws Exception{
+    public static void init() throws Exception {
 
         // init from properites file (this is sonar installation specific.
         Properties props = new Properties();
@@ -55,8 +60,8 @@ public class SonarClientTest {
 
         final Sonar response = sonarClient.getSonarQualityStatus(sonarProjectKey);
 
-        final Sonar.SonarStatus projectStatus = response.getProjectStatus();
+        final SonarStatus projectStatus = response.getProjectStatus();
 
-        Assert.assertEquals(Sonar.ProjectStatus.ERROR, projectStatus.getStatus());
+        Assert.assertEquals(ProjectStatus.ERROR, projectStatus.getStatus());
     }
 }

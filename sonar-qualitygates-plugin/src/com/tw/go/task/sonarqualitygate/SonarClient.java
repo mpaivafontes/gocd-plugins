@@ -1,10 +1,10 @@
 package com.tw.go.task.sonarqualitygate;
 
 import com.google.gson.Gson;
+import com.tw.go.task.sonarqualitygate.model.Sonar;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.*;
 import java.security.GeneralSecurityException;
 
 import com.tw.go.plugin.common.ApiRequestBase;
