@@ -67,7 +67,7 @@ public class SonarScanTask extends BaseGoPlugin {
         //  .../gocd/plugin-infra/go-plugin-access/src/com/thoughtworks/go/plugin/access/PluginRequestHelper.java
 
         try {
-            Result result = executor.execute();
+            Result result = executor.executeSonar();
             return success(result.toMap());
         } catch (Exception e) {
             Result result = new Result(false,e.getMessage());

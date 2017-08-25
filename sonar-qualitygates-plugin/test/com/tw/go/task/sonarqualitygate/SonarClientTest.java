@@ -31,6 +31,7 @@ public class SonarClientTest {
         SonarClientTest.sonarProjectKey = props.getProperty("sonarProjectKey");
     }
 
+    @Test
     public void testQualityGateResult() throws Exception {
 
         // create a sonar client
@@ -48,4 +49,14 @@ public class SonarClientTest {
         Assert.assertEquals("ERROR", qgResult);
     }
 
+    @Test
+    public void testQualityCheckSonar6x() throws Exception {
+        final SonarClient sonarClient = new SonarClient(sonarApiUrl);
+
+        final Sonar response = sonarClient.getSonarQualityStatus(sonarProjectKey);
+
+        final Sonar.SonarStatus projectStatus = response.getProjectStatus();
+
+        Assert.assertEquals(Sonar.ProjectStatus.ERROR, projectStatus.getStatus());
+    }
 }
