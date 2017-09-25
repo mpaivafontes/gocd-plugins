@@ -129,8 +129,11 @@ public class SonarTaskExecutor extends TaskExecutor {
      * @return string with the value of property
      */
     final String getConfig(final String property) {
-        final Map param = (Map) this.config.get(property);
-        return (String) param.get(GoApiConstants.PROPERTY_NAME_VALUE);
+        if (this.config.containsKey(property)) {
+            final Map param = (Map) this.config.get(property);
+            return (String) param.get(GoApiConstants.PROPERTY_NAME_VALUE);
+        }
+        return null;
     }
 
     /**
@@ -142,6 +145,8 @@ public class SonarTaskExecutor extends TaskExecutor {
     public Result executeSonar() throws Exception {
         final String projectKey = this.getConfig(SonarScanTask.SONAR_PROJECT_KEY);
         final String apiUrl = this.getConfig(SonarScanTask.SONAR_API_URL);
+        final String username = this.getConfig(SonarScanTask.SONAR_USERNAME);
+        final String password = this.getConfig(SonarScanTask.SONAR_PASSWORD);
 
         final String stageName = this.getConfig(SonarScanTask.STAGE_NAME);
         final String jobName = this.getConfig(SonarScanTask.JOB_NAME);
@@ -151,8 +156,9 @@ public class SonarTaskExecutor extends TaskExecutor {
 
         final SonarClient sonarClient = new SonarClient(apiUrl);
 
-        // TODO basic auth based plugin configuration
-        // sonarClient.setBasicAuthentication(username, password);
+        if (username != null && password != null) {
+            sonarClient.setBasicAuthentication(username, password);
+        }
 
         try {
             final Sonar response = sonarClient.getSonarQualityStatus(projectKey);
